@@ -15,6 +15,9 @@ app.get('/animals', (req, res) => {
 app.get('/animals/:id', (req, res) => {
     const providedId = Number(req.params.id);
     const foundAnimal = animals.find((animal) => animal.id === providedId);
+    if (isNaN(providedId)){
+        return res.status(400).send({ data: `the parameter must be a number` })
+    }
     if (!foundAnimal) {
         return res.status(404).send({ data: `No animal found by id: ${providedId}` })
     }
@@ -34,6 +37,9 @@ app.put('/animals/:id', (req, res) => {
     const providedId = Number(req.params.id);
     const foundIndex = animals.findIndex(item => item.id === providedId);
 
+    if (isNaN(providedId)){
+        return res.status(400).send({ data: `the parameter must be a number` })
+    }
     if (foundIndex === -1) {
         return res.status(404).send({ data: `No animal found by id: ${providedId}` })
     }
@@ -51,7 +57,9 @@ app.patch('/animals/:id', (req, res) => {
     const providedId = Number(req.params.id);
     const foundIndex = animals.findIndex(animal => animal.id === providedId);
     const foundAnimal = animals.find(animal => animal.id === providedId);
-
+    if (isNaN(providedId)){
+        return res.status(400).send({ data: `the parameter must be a number` })
+    }
     if (!foundAnimal) {
         return res.status(404).send({ data: `No animal found by id: ${providedId}` });
     }
@@ -71,6 +79,10 @@ app.patch('/animals/:id', (req, res) => {
 app.delete('/animals/:id', (req, res) => {
     const providedId = Number(req.params.id);
     const foundIndex = animals.findIndex(animal => animal.id === providedId);
+
+    if (isNaN(providedId)){
+        return res.status(400).send({ data: `the parameter must be a number` })
+    }
 
     if (foundIndex === -1) {
         return res.status(404).send({ data: "Animal not found" })
