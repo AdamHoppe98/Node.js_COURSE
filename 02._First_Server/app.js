@@ -4,17 +4,22 @@ const express = require('express');
 // console.log(express); logs the library functions
 // declares the variable app and assigns its value to express();
 const app = express(); // instancieret
+app.use(express.json());
+
 
 // const app = require('express')(); //importere og instancere, da importen er en function, som kan instancieres.
-
 
 // console.log(app);
 //task: Create a route for endpoint / that returns a greeting
 
 // endpoint // callback function
 app.get('/', (req, res) => {
-    res.send({ data: "Welcome to the API 0.0.1" });
+    res.sendFile(__dirname   + "/index.html");
 });
+
+app.get('/xss', (req, res) => {
+    res.sendFile(__dirname + '/xss.html')
+})
 
 // -- this is a route handler, it takes a path and a callback function 
 // originally this is a json object
@@ -22,7 +27,7 @@ app.get('/', (req, res) => {
 
 
 app.get('/blablabla', (req, res) => {
-    res.send({ data2: "2nd They talk a lot but nothing is said" });
+    res.send({ data: "2nd They talk a lot but nothing is said" });
 });
 
 app.get('/myTestEndpoint', (req, res) => {
@@ -48,27 +53,33 @@ app.get('/myTestEndpoint', (req, res) => {
 // create a /beers route
 app.get('/beers/:beerType/:amount', (req, res) => {
     console.log(req.params);
-    res.send({ data: `you ordered ${req.params.amount} of ${req.params.beerType}`});
+    res.send({ data: `you ordered ${req.params.amount} of ${req.params.beerType}` });
 })
 
-// /bars/forgottenItems?myGirlfriend=mygirlfriend&myMom=myMom&myHorn=myHorn
-app.get('/bars/:forgottenItems', (req, res) => {
-    res.send({ data: `You forgot your ${req.query.forgottenItem} at the bar`});
+// // /bars/forgottenItems?myGirlfriend=mygirlfriend&myMom=myMom&myHorn=myHorn
+// app.get('/bars/:forgottenItems', (req, res) => {
+//     res.send({ data: `You forgot your ${req.query.forgottenItem} at the bar`});
 
+// });
+// /bars/forgottenItems?wallet=200&keys=my house&my_baby=Sam
+app.get('/bars/forgottenItems', (req, res) => {
+    console.log(req.query);
+    res.send({ data: req.query });
 });
 
-const beers = {
-    lager: 'lager',
-    ale: 'ale',
-    stout: 'stout',
-    pilsner: 'pilsner'
-}
 
-const forgottenItem = {
-    myGirlfriend: 'my girlfriend',
-    myMom: 'my Mom',
-    myHorn: 'my horn',
-}
+app.post('/dictators', (req, res) => {
+    console.log(req.body);
+    res.send({ data: req.body });
+});
+
+// task create a patch for dictators
+
+app.patch('/dictators/:name', (req, res) => {
+    res.send({ data: `You have turned the great dictator - ${req.params.name} benevolent for life` })
+})
+
+
 
 // makes the app liste on port 8080
 app.listen(8080);
