@@ -49,6 +49,7 @@ app.put('/animals/:id', (req, res) => {
 
 app.patch('/animals/:id', (req, res) => {
     const providedId = Number(req.params.id);
+    const foundIndex = animals.findIndex(animal => animal.id === providedId);
     const foundAnimal = animals.find(animal => animal.id === providedId);
 
     if (!foundAnimal) {
@@ -63,7 +64,7 @@ app.patch('/animals/:id', (req, res) => {
     if (age !== undefined) {
         foundAnimal.age = age;
     }
-
+    animals[foundIndex] = foundAnimal;
     res.send({ data: foundAnimal });
 });
 
