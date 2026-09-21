@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torture Methods</title>
+    <!-- <link rel="stylesheet" href="frontpage.css"> -->
+    <style>
+        h1 {
+            color: darkred;
+        }
+    </style>
+    
+</head>
+<body style="background-color: red;">
+    <h1>Welcome to the goriest website on the internet!!!</h1>
+    <h3 id="under-construction-headline">the website is Under construction...</h3>
+
+    <div>
+        <h4>Counter. people who have been killed by visiting this website.</h4>
+        <h3 id="counter"></h3>
+
+    </div>
+    <!-- <script src="frontpage.js"></script> -->
+    <script >
+        fetch("/api/counter").then(res => res.json())
+        .then(result => {
+            const counterElement = document.getElementById("counter");
+            counterElement.textContent = result.data;
+        });
+        
+
+    </script>
+</body>
+</html>
