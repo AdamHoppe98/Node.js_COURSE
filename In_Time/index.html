@@ -16,7 +16,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 50px;
+            font-size: 150px;
+            
         }
 
         ul {
@@ -26,10 +27,44 @@
         p {
             font-size: 26px;
         }
+
         input {
+            padding: 12px;
+            border: 1px solid black;
+            border-radius: 7px;
+            margin: 4px;
+            font-size: 20px;
+        }
+
+        body {
+            background-color: deepskyblue;
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+        }
+
+        button {
+            margin: 10px;
+            padding: 12px 50px;
+            font-size: 20px;
+            border-radius: 7px;
+            border: 1px solid black;
+            background: white;
+        }
+
+        button:hover {
+            background: rgb(204, 204, 214);
+            cursor: pointer;
+            border: none;
+        }
+
+        label {
+            font-size: 26px;
+        }
+
+        #createElement {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            gap: 4px;
         }
     </style>
 </head>
@@ -42,15 +77,16 @@
         <ul id="cities">
 
         </ul>
-        
+
     </div>
-    
-    <div>
+
+    <div id="createElement">
         <label for="">City:</label>
         <input type="text" id="city"></input>
         <label for="">Time zone:</label>
         <input type="text" id="timeZone"></input>
         <button onclick="postCity()">opret</button>
+        <p hidden id="error" style="color: red;"></p>
     </div>
 
     <script>
@@ -71,25 +107,46 @@
 
         }
 
-        async function postCity(){
+        async function postCity() {
             const city = document.getElementById("city").value
             const timeZone = document.getElementById("timeZone").value
+            if (city.trim() === "" || timeZone.trim() === "") {
+                const errorElement = document.getElementById("error");
+                errorElement.hidden = false;
+                errorElement.textContent = "City eller Time zone må ikke være tomme"
+                city.textContent = ""
+                timeZone.textContent = ""
+                return;
+            }
+            if ( isNaN(timeZone)){
+                const errorElement = document.getElementById("error");
+                errorElement.hidden = false;
+                errorElement.textContent = "Time Zone skal være et tal"
+                city.textContent = ""
+                timeZone.textContent = ""
+                return;
+            }
             console.log(city, timeZone);
             
+            const errorElement = document.getElementById("error");
+            errorElement.hidden = true;
             try {
                 const res = await fetch('http://localhost:8080/api/cities', {
                     method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({ name: city, timeZone })
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name: city.trim(), timeZone: timeZone.trim() })
                 })
-                if (!res.ok){
+                if (!res.ok) {
                     console.log("der skete en fejl");
                     
                 }
+                city.textContent = ""
+                timeZone.textContent = ""
                 render()
             } catch {
                 console.log("der skete en fejl")
             }
+
         }
 
         async function render() {
