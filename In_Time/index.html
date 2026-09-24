@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>In Time</title>
     <style>
+        @font-face {
+            font-family: 'DSEG7 Classic';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url(https://cdn.jsdelivr.net/fontsource/fonts/dseg7-classic@latest/latin-400-normal.woff2) format('woff2'),
+                url(https://cdn.jsdelivr.net/fontsource/fonts/dseg7-classic@latest/latin-400-normal.woff) format('woff');
+        }
+
+
+
         div {
             display: flex;
             justify-content: center;
@@ -13,11 +24,8 @@
         }
 
         h1 {
-            display: flex;
-            justify-content: center;
-            align-items: center;
             font-size: 150px;
-            
+            margin: 0;
         }
 
         ul {
@@ -38,7 +46,8 @@
 
         body {
             background-color: deepskyblue;
-            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+            text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
         }
 
         button {
@@ -66,12 +75,58 @@
             align-items: center;
             gap: 4px;
         }
+
+        #clock {
+            font-family: 'DSEG7 Classic', monospace;
+            font-size: (2rem, 10vw, 4.5rem);
+            color: #ff0000;
+            padding: 0.3em 0.5em;
+        }
+
+        #clockDiv {
+            border: 2px solid black;
+            display: inline-block;
+            text-align: center;
+            margin: 0px;
+            padding: 10px 10px;
+            border-radius: 20px;
+            background-color: black;
+        }
+
+        .timeElement {
+            font-family: 'DSEG7 Classic', monospace;
+            color: #ff0000;
+            background-color: black;
+            font-size: 20px;
+            margin: 0;
+            padding: 4px 10px;
+            border-radius: 10px;
+        }
+
+        #cities {
+            padding: 0;
+            width: 420px;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        li p {
+            margin: 0;
+        }
     </style>
 </head>
 
 <body>
 
-    <h1 id="clock">--:--:--</h1>
+    <div id="clockDiv">
+        <h1 id="clock">--:--:--</h1>
+    </div>
     <div id="center">
 
         <ul id="cities">
@@ -118,7 +173,7 @@
                 timeZone.textContent = ""
                 return;
             }
-            if ( isNaN(timeZone)){
+            if (isNaN(timeZone)) {
                 const errorElement = document.getElementById("error");
                 errorElement.hidden = false;
                 errorElement.textContent = "Time Zone skal være et tal"
@@ -127,7 +182,7 @@
                 return;
             }
             console.log(city, timeZone);
-            
+
             const errorElement = document.getElementById("error");
             errorElement.hidden = true;
             try {
@@ -138,7 +193,7 @@
                 })
                 if (!res.ok) {
                     console.log("der skete en fejl");
-                    
+
                 }
                 city.textContent = ""
                 timeZone.textContent = ""
@@ -155,7 +210,7 @@
                 .then(result => result.data);
 
             const now = new Date(timeData.iso);
-            document.getElementById('clock').textContent = timeData.localString;
+            document.getElementById('clock').textContent = timeData.localString.replace(/\./g, ':');
 
             const cities = await fetch("/api/cities")
                 .then(response => response.json())
@@ -168,11 +223,20 @@
                 const cityTime = new Date(now.getTime() + city.timeZone * 60 * 60 * 1000);
 
                 const li = document.createElement("li");
+            
                 const timeElement = document.createElement("p");
-                timeElement.textContent =
-                    `${city.name}  |  ${cityTime.toLocaleTimeString('da-DK')}  |  ${formatOffset(city.timeZone)}`;
+                timeElement.textContent = cityTime.toLocaleTimeString('da-DK').replace(/\./g, ':');
+                timeElement.className = "timeElement"
 
-                li.appendChild(timeElement);
+                const cityElement = document.createElement("p");
+                cityElement.textContent = city.name;
+
+
+                const TimeZoneElement = document.createElement("p")
+                TimeZoneElement.textContent = formatOffset(city.timeZone);
+
+
+                li.append(cityElement, timeElement, TimeZoneElement);
                 citiesElement.appendChild(li);
             });
         }
