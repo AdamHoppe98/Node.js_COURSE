@@ -1,12 +1,21 @@
-const express = require("express");
+import express from 'express';
+
 const app = express();
 app.use(express.json())
+app.use(express.static('public'));
+
+
+import fruitPackage from './util/fruitsUtilESModule.js'
+console.log(fruitPackage.slogan, fruitPackage.fruits);
 
 
 
 app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/frontpage/index.html');
+});
 
-    res.sendFile(__dirname + '/index.html');
+app.get('/fruits', (req, res) => {
+    res.sendFile(__dirname + '/public/fruits/fruits.html');
 });
 
 

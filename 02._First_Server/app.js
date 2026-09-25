@@ -68,6 +68,17 @@ app.get('/bars/forgottenItems', (req, res) => {
 });
 
 
+app.get('/proxy', (req ,res) => {
+    /*
+    assignment fetch google and serve it here
+    */
+    fetch('https://www.google.com/')
+    .then(response => response.text())
+    .then(result => res.send(result));
+    
+    
+})
+
 app.post('/dictators', (req, res) => {
     console.log(req.body);
     res.send({ data: req.body });
