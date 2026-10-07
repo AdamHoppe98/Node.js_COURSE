@@ -5,18 +5,30 @@ app.use(express.json())
 app.use(express.static('public'));
 
 
+import path from 'path';
+
+
+
 import fruitPackage from './util/fruitsUtilESModule.js'
+import { AsyncLocalStorage } from 'async_hooks';
 console.log(fruitPackage.slogan, fruitPackage.fruits);
 
+console.log(path.resolve());
 
-
+// route
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/frontpage/index.html');
+    res.sendFile(path.resolve('public/frontpage/index.html') );
 });
 
 app.get('/fruits', (req, res) => {
-    res.sendFile(__dirname + '/public/fruits/fruits.html');
+    res.sendFile(path.resolve('public/frontpage/index.html'));
 });
+
+app.get('/redirection', (req, res) => {
+    res.sendFile(path.resolve('public/redirection/redirection.html'))
+})
+
+
 
 
 app.listen(8080, error => {

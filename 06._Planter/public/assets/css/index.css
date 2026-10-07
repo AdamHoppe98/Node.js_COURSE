@@ -1,0 +1,31 @@
+#logo {
+    width: 8vw;
+    min-width: 8rem;
+    height: auto;
+}
+
+/* rem */
+/*  
+footer {
+    height: 5vh;
+}
+
+main {
+    min-height: calc(100vh - 25vh);
+}
+
+nav {
+    height: 15vh;
+} */
+
+body {
+    min-height: 95vh;
+    display: flex;
+    flex-direction: column;
+  
+}
+
+main {
+    flex: 1;
+}
+
