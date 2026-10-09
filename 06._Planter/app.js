@@ -1,8 +1,5 @@
 import express from 'express'
-import path from 'path'
 const app = express()
-app.use(express.json())
-
 app.use(express.static('public'))
 
 // short-circuit operator
@@ -10,26 +7,26 @@ app.use(express.static('public'))
 
 // console.log(false && 8080 && null);
 // console.log("" ?? 8080);
-
-import { fetchAllPlants, fetchPlant } from './util/fetchPlants.js'
-
-
 const PORT = process.env.PORT ?? 8080;
 
 
+import { frontpagePage, aboutPage } from './templatingEngine/pages.js';
 
 
 /// pages -----
 app.get('/', (req, res) => {
-    res.sendFile(path.resolve('public/pages/frontpage/frontpage.html'))
+    res.send(frontpagePage)
+    // res.sendFile(path.resolve('public/pages/frontpage/frontpage.html'))
 })
 
 app.get('/about', (req, res) => {
-    res.sendFile(path.resolve('public/pages/about/about.html'))
+    res.send(aboutPage)
 });
 
+import { fetchAllPlants, fetchPlant } from './util/fetchPlants.js'
 
 /// api ----
+
 app.get('/api/plants', async (req, res) => {
     res.send({ data: await fetchAllPlants() })
 })
