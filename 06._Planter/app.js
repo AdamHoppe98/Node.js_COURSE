@@ -11,21 +11,33 @@ app.use(express.static('public'))
 // console.log(false && 8080 && null);
 // console.log("" ?? 8080);
 
+import { fetchAllPlants, fetchPlant } from './util/fetchPlants.js'
+
 
 const PORT = process.env.PORT ?? 8080;
 
 
+
+
+/// pages -----
 app.get('/', (req, res) => {
-    res.sendFile(path.resolve('public/frontpage/frontpage.html'))
+    res.sendFile(path.resolve('public/pages/frontpage/frontpage.html'))
 })
 
 app.get('/about', (req, res) => {
-    res.sendFile(path.resolve('public/about/about.html'))
+    res.sendFile(path.resolve('public/pages/about/about.html'))
+});
+
+
+/// api ----
+app.get('/api/plants', async (req, res) => {
+    res.send({ data: await fetchAllPlants() })
 })
 
-app.get('/contact', (req, res) => {
-    res.sendFile(path.resolve('public/contact/contact.html'))
+app.get('/api/plants/:plantSlug', async (req, res) => {
+    res.send({ data: await fetchPlant(req.params.plantSlug) });
 })
+
 
 
 const server = app.listen(PORT, error => {

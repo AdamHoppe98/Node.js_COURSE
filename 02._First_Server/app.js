@@ -30,9 +30,17 @@ app.get('/blablabla', (req, res) => {
     res.send({ data: "2nd They talk a lot but nothing is said" });
 });
 
+
+// server side redirection
+app.get('/chatterroom', (req, res) => {
+    res.redirect('/blablabla')
+});
+
 app.get('/myTestEndpoint', (req, res) => {
     res.send({ data: "Greetings, you succeeded reaching my test endpoint" });
 });
+
+
 
 // callback function: a function reference provided as an argument with the possibility, 
 // perhaps (of being called later). The function is not called immediately,

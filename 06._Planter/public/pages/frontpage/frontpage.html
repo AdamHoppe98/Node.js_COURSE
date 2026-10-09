@@ -6,6 +6,7 @@
     <link rel="icon" type="image/png" href="/assets/images/plant.png" />
     <title>Planter</title>
     <link rel="stylesheet" href="/assets/css/index.css">
+    <link rel="stylesheet" href="/pages/frontpage/frontpage.css">
 </head>
 <body>
     <!-- task create a navbar on the frontpage and /about that redirect -->
@@ -18,6 +19,14 @@
 
     <main>
         <h1>Planter</h1>
+        <section id="add-plants">
+            <input id="plants-list-search-input" list="plants-list">
+            <datalist id="plants-list"></datalist>
+            <button onclick="addPlant()">Add Plant</button>
+        </section>
+        <section id="plants">
+
+        </section>
     </main>
     <!--  -->
     <footer>
@@ -25,7 +34,7 @@
         <p></p>
     </footer>
 
-
+    <script src="/pages/frontpage/frontpage.js"></script>
     <script type="module" src="/assets/js/footer.js"></script>
 </body>
 </html>
