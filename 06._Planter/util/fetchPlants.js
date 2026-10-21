@@ -1,4 +1,4 @@
-import { sanitizeXSS } from "./escapeHTML.js";
+import { sanitizeXSS } from "../public/assets/js/escapeHTML.js";
 
 let plants;
 

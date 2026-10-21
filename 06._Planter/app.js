@@ -10,9 +10,9 @@ app.use(express.static('public'))
 const PORT = process.env.PORT ?? 8080;
 
 
+
+
 import { frontpagePage, aboutPage } from './templatingEngine/pages.js';
-
-
 /// pages -----
 app.get('/', (req, res) => {
     res.send(frontpagePage)
