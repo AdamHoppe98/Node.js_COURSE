@@ -1,4 +1,3 @@
-import { sanitizeXSS } from "../public/assets/js/escapeHTML.js";
 
 let plants;
 

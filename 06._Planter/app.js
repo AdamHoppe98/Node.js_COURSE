@@ -9,33 +9,13 @@ app.use(express.static('public'))
 // console.log("" ?? 8080);
 const PORT = process.env.PORT ?? 8080;
 
+import pagesRouter from './routers/pagesRouter.js';
 
+app.use(pagesRouter);
 
+import plantsRouter from './routers/plantsRouter.js';
 
-import { frontpagePage, aboutPage } from './templatingEngine/pages.js';
-/// pages -----
-app.get('/', (req, res) => {
-    res.send(frontpagePage)
-    // res.sendFile(path.resolve('public/pages/frontpage/frontpage.html'))
-})
-
-app.get('/about', (req, res) => {
-    res.send(aboutPage)
-});
-
-import { fetchAllPlants, fetchPlant } from './util/fetchPlants.js'
-
-/// api ----
-
-app.get('/api/plants', async (req, res) => {
-    res.send({ data: await fetchAllPlants() })
-})
-
-app.get('/api/plants/:plantSlug', async (req, res) => {
-    res.send({ data: await fetchPlant(req.params.plantSlug) });
-})
-
-
+app.use(plantsRouter);
 
 const server = app.listen(PORT, error => {
     if (error) {

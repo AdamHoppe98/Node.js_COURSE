@@ -1,4 +1,4 @@
-export function sanitizeXSS(string) {
+function sanitizeXSS(string = "") {
     return string
         .replaceAll('&', '&amp;')
         .replaceAll('<', '&lt;')
