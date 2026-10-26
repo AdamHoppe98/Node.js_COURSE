@@ -1,1 +1,22 @@
 <h1>Contact</h1>
+
+<p>Submit a query below if you have any questions or feeback.</p>
+
+<form action="/api/contact" method="POST">
+    <fieldset>
+        <label for="topic">Topic</label>
+        <input id="topic" name="topic" placeholder="topic..." value="i hate plants">
+
+        <label for="name">Name</label>
+        <input id="name" name="name" placeholder="name..." value="adam">
+
+        <label for="email">Email</label>
+        <input id="email" name="email" placeholder="email..." type="email" required value="adam@hateplants.com">
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="message..." rows="15" cols="60">i hate plants</textarea>
+
+        <button>Contact</button>
+    </fieldset>
+</form>
+
